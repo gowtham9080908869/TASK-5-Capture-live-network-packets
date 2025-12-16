@@ -1,0 +1,71 @@
+🧾 Live Network Packet Capture Report
+🔍 Overview
+This report summarizes live packet captures from a Wireshark session, filtered by protocol types to analyze traffic patterns, endpoints, and potential insights for network troubleshooting or cybersecurity monitoring.
+
+1. 📡 HTTP Traffic Analysis
+Filter Used: http
+Key Observations:
+- Source IP: 146.75.122.172 (likely a public-facing server)
+- Destination IP: 10.167.32.91 (internal/private client)
+- Protocol: HTTP over TCP (Port 80)
+- Notable Packet:
+- Packet No. 66 contains a GET request to a streaming service with a long URL and parameters, indicating media or content retrieval.
+- Other Packets:
+- Many labeled as Continuation, suggesting segmented HTTP payloads across multiple TCP packets.
+Frame Details (Packet 4):
+- Ethernet II: MAC addresses of client and server
+- IP Layer: IPv4 communication
+- TCP Layer:
+- Source Port: 80
+- Destination Port: 18734
+- Sequence and Acknowledgment numbers indicate active session
+- Payload: HTTP content visible in ASCII and hex
+Interpretation:
+This traffic likely represents a media stream or web content being accessed by the client. The continuation packets suggest large data transfer, possibly video or file download.
+
+2. 🌐 DNS Traffic Analysis
+Filter Used: dns
+Key Observations:
+- Source IP: 10.167.32.91
+- Destination IP: 10.167.32.90
+- Protocol: DNS over UDP (Port 53)
+- Queried Domains:
+- outlook.office365.com
+- optimizationguide-pa.googleapis.com
+- collector.bsg.brave.com
+- msedge.api.cdp.microsoft.com
+Frame Details (Packet 1279):
+- Ethernet II: MAC addresses of local devices
+- IP Layer: IPv4
+- UDP Layer:
+- Source Port: 55106
+- Destination Port: 53
+- DNS Layer: Query type
+Interpretation:
+The client is actively resolving domain names for Microsoft, Google, Brave, and Edge services. This indicates browser activity, telemetry, or background service communication.
+
+3. 🔒 TCP Traffic Analysis
+Filter Used: tcp
+Key Observations:
+- Source IP: 2409:40f4:314a:5a5f:... (IPv6)
+- Destination IP: 2600:140f:400::b854:e9 (IPv6)
+- Protocol: TCP over IPv6
+- Ports:
+- Source Port: 54184
+- Destination Port: 443 (HTTPS)
+- Flags: ACK
+- Stream Index: 31 (first packet in stream)
+Frame Details (Packet 128):
+- TCP Segment Length: 1 byte
+- Sequence & Acknowledgment Numbers:
+- Seq: 4211552233
+- Ack: 3126732339
+- Window Size: 251
+Interpretation:
+This packet is part of an HTTPS session, likely encrypted. The ACK flag and minimal payload suggest session establishment or keep-alive behavior.
+
+
+Recommendations:
+- Monitor HTTP GET requests for unusual URLs or payloads.
+- Review DNS queries for suspicious domains.
+- Correlate TCP streams with application behavior for anomaly detection.
